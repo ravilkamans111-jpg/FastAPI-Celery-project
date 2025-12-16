@@ -1,0 +1,84 @@
+from fastapi import FastAPI, HTTPException, APIRouter, Query
+from fastapi.params import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+from core.models.db_helper import db_help
+from .crud import task_service
+from .depends import task_by_id
+from .schemas import TaskCreate, Task, TaskUpdate, TaskUpdatePart
+
+
+task_router = APIRouter(tags= ['Tasks'])
+
+
+@task_router.get(
+    '/',
+    response_model = list[Task],
+)
+async def get_tasks(
+        session: AsyncSession = Depends(db_help.session_dependency),
+):
+    return await task_service.get_tasks(session=session)
+
+
+@task_router.post(
+    '/',
+    response_model = Task,
+)
+async def create_task(
+        task_in:TaskCreate,
+        session: AsyncSession = Depends(db_help.session_dependency),
+):
+    return await task_service.create_task(session=session, task_in=task_in)
+
+
+@task_router.get(
+    '/{task_id}/',
+    response_model = Task,
+)
+async def get_task(
+        task : Task = Depends(task_by_id),
+):
+    return task
+
+
+@task_router.put(
+    '/{task_id}/',
+)
+async def update_task(
+        task_update : TaskUpdate,
+        task : Task = Depends(task_by_id),
+        session: AsyncSession = Depends(db_help.session_dependency)
+ ):
+    return await task_service.update_task(
+        session=session,
+        task=task,
+        task_update_part=task_update,
+    )
+
+
+@task_router.patch(
+    '/tasks/{task_id}/status/',
+    response_model=Task,
+)
+async def update_task(
+        task_update : TaskUpdatePart,
+        task : Task = Depends(task_by_id),
+        session: AsyncSession = Depends(db_help.session_dependency)
+ ):
+    return await task_service.update_task_part(
+        session=session,
+        task=task,
+        task_update_part=task_update,
+        partial = True
+    )
+
+
+@task_router.get(
+    "/tasks/user/{user_id}",
+    response_model=list[Task],
+)
+async def get_tasks_by_user(
+    user_id: int,
+    session: AsyncSession = Depends(db_help.session_dependency),
+):
+    return await task_service.get_tasks_by_user_id(session=session, user_id=user_id)
