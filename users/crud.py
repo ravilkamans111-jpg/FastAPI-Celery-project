@@ -3,6 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.models import db_help, User
 from users.shemas import UserCreate
 
+''' Сервисы для пользователей '''
+
 
 class UserService:
 

@@ -2,6 +2,8 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
+'''Pydantic схема для пользователей '''
+
 class UserSchema(BaseModel):
     id: int
     email: str

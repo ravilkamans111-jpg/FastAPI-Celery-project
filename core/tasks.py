@@ -3,7 +3,7 @@ from core.celery_app import celery_app
 from core.models.task import StatusEnum, Tasks
 from .models import db_help
 
-
+''' Таска для Celery'''
 
 @celery_app.task(name='tasks.process_task')
 def process_task(task_id: int):

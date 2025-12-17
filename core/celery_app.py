@@ -1,5 +1,7 @@
 from celery import Celery
 
+'''Celery приложение'''
+
 celery_app = Celery(
     "core",
     broker="amqp://guest:guest@localhost:5672//",

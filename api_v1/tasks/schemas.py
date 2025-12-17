@@ -3,6 +3,8 @@ from core.models.task import StatusEnum
 from pydantic import BaseModel, ConfigDict, Field
 
 
+''' Pydantic - схемы для задач'''
+
 class TasksBase(BaseModel):
     title: str = Field(min_length=1, max_length=200)
     description: str | None

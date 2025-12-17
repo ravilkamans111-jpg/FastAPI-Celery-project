@@ -5,7 +5,7 @@ from api_v1.tasks.crud import task_service
 from core.models.db_helper import db_help
 
 
-
+'''Зависимости'''
 async def task_by_id(task_id: Annotated[int, Path],
                      session: AsyncSession = Depends(db_help.session_dependency)):
     task = await task_service.get_task(session=session, task_id=task_id)

@@ -10,6 +10,8 @@ from .schemas import TaskCreate, Task, TaskUpdate, TaskUpdatePart
 task_router = APIRouter(tags= ['Tasks'])
 
 
+''' Роутеры для задач'''
+
 @task_router.get(
     '/',
     response_model = list[Task],

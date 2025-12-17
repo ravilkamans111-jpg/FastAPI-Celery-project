@@ -4,6 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.models.task import Tasks
 
 
+
+'''Работа с базой данных в crud'''
 class RepoTask:
     async def get_all_tasks(self, session: AsyncSession) -> list[Tasks]:
         stmt = select(Tasks).order_by(Tasks.id)

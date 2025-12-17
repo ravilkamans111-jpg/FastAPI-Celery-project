@@ -11,6 +11,8 @@ from users.dependencies import user_by_id
 user_router = APIRouter(prefix='/users', tags= ['Users'])
 
 
+''' Роуты для пользваотелей '''
+
 @user_router.post('/user', response_model = UserRead)
 async def create_user(
     user_in: UserCreate,

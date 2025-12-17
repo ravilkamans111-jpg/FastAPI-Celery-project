@@ -6,6 +6,8 @@ from sqlalchemy import String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
+''' Алхимия для пользователей'''
+
 
 if TYPE_CHECKING:
     from .task import Tasks

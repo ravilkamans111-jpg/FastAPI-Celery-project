@@ -42,6 +42,7 @@ new_session = async_sessionmaker(engine, expire_on_commit=False)
         await session.remove()
 
 
+''' Экземпляр класс для работы в коде '''
 db_help = DatabaseHelper(
     url=settings.db_url,
     echo=settings.echo

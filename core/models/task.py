@@ -10,6 +10,9 @@ if TYPE_CHECKING:
     from .users import User
 
 
+''' Алхимия для задач'''
+
+
 class StatusEnum(str, enum.Enum):
     PENDING = 'pending'
     IN_PROGRESS = 'in progress'
@@ -23,6 +26,8 @@ class Tasks(Base, UpdatedAtMixin, CreatedAtMixin):
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str | None] = mapped_column(String, nullable=True)
     status: Mapped[StatusEnum] = mapped_column(String, default=StatusEnum.PENDING)
+
+    ''' Устанавливаем Foreign key'''
 
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
 

@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.models.task import Tasks
 from api_v1.tasks.schemas import TaskCreate, TaskUpdate, TaskUpdatePart
 
+'''Сервисы для создания, просмотра и тд'''
 
 class TaskService:
 
