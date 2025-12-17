@@ -28,7 +28,7 @@ class TaskService:
         task = Tasks(**task_in.model_dump())
         session.add(task)
         await session.commit()
-
+        await session.refresh(task)
         process_task.delay(task.id)
 
         return task
