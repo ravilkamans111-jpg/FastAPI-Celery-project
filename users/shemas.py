@@ -1,6 +1,5 @@
 from datetime import datetime
-from pydantic import BaseModel
-
+from pydantic import BaseModel, EmailStr
 
 '''Pydantic схема для пользователей '''
 
@@ -19,4 +18,4 @@ class UserRead(UserSchema):
 
 
 class UserCreate(BaseModel):
-    email: str
+    email: EmailStr

@@ -1,5 +1,10 @@
 import asyncio
+from http.client import HTTPException
+
+from pydantic import EmailStr
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql.expression import select
+
 from core.models import db_help, User
 from users.shemas import UserCreate
 
@@ -9,6 +14,11 @@ from users.shemas import UserCreate
 class UserService:
 
     async def create_user(self, session: AsyncSession, user_in: UserCreate):
+        new_user = await self.get_user_by_email(session, user_in.email)
+
+        if new_user:
+            raise HTTPException(400, 'User in DB')
+
         user = User(**user_in.model_dump())
         session.add(user)
         await session.commit()
@@ -19,5 +29,10 @@ class UserService:
     async def get_user_by_id(self, session: AsyncSession, user_id: int) -> User | None:
         return await session.get(User, user_id)
 
+
+    async def get_user_by_email(self, session: AsyncSession, user_email: EmailStr):
+        result = await session.execute(select(User).where(User.email==user_email))
+
+        return result.scalar_one_or_none()
 
 user_service = UserService()

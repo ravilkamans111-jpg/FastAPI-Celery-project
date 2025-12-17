@@ -62,7 +62,7 @@ async def update_task(
     '/tasks/{task_id}/status/',
     response_model=Task,
 )
-async def update_task(
+async def update_task_part(
         task_update : TaskUpdatePart,
         task : Task = Depends(task_by_id),
         session: AsyncSession = Depends(db_help.session_dependency)
@@ -76,7 +76,7 @@ async def update_task(
 
 
 @task_router.get(
-    "/tasks/user/{user_id}",
+    "/user/{user_id}",
     response_model=list[Task],
 )
 async def get_tasks_by_user(
