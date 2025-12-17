@@ -19,9 +19,8 @@ app.include_router(router=router_v1, prefix=settings.api_v1_prefix)
 app.include_router(router=router_v2)
 
 
-
-if __name__ == '__main__':
-    uvicorn.run('main:app', reload=True)
+if __name__ == "__main__":
+    uvicorn.run("main:app", reload=True)
 # @app.get('/users/{user_id}/', tags=['Get user by id'])
 # async def get_users():
 #     ...
@@ -48,5 +47,3 @@ if __name__ == '__main__':
 # @app.patch('/tasks/{task_id}/status/', tags=['Update tasks status'])
 # async def update_tasks_status():
 #     ...
-
-

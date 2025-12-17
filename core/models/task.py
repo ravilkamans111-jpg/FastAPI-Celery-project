@@ -10,13 +10,13 @@ if TYPE_CHECKING:
     from .users import User
 
 
-''' Алхимия для задач'''
+""" Алхимия для задач"""
 
 
 class StatusEnum(str, enum.Enum):
-    PENDING = 'pending'
-    IN_PROGRESS = 'in progress'
-    DONE = 'done'
+    PENDING = "pending"
+    IN_PROGRESS = "in progress"
+    DONE = "done"
 
 
 class Tasks(Base, UpdatedAtMixin, CreatedAtMixin):
@@ -27,11 +27,8 @@ class Tasks(Base, UpdatedAtMixin, CreatedAtMixin):
     description: Mapped[str | None] = mapped_column(String, nullable=True)
     status: Mapped[StatusEnum] = mapped_column(String, default=StatusEnum.PENDING)
 
-    ''' Устанавливаем Foreign key'''
+    """ Устанавливаем Foreign key"""
 
-    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
-    user: Mapped["User"] = relationship(
-        "User",
-        back_populates="tasks"
-    )
+    user: Mapped["User"] = relationship("User", back_populates="tasks")

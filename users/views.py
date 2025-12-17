@@ -8,19 +8,19 @@ from users.shemas import UserCreate
 from users.dependencies import user_by_id
 
 
-user_router = APIRouter(prefix='/users', tags= ['Users'])
+user_router = APIRouter(prefix="/users", tags=["Users"])
 
 
-''' Роуты для пользователей '''
+""" Роуты для пользователей """
 
-@user_router.post('/', response_model = UserRead)
+
+@user_router.post("/", response_model=UserRead)
 async def create_user(
-    user_in: UserCreate,
-    session: AsyncSession = Depends(db_help.session_dependency)
+    user_in: UserCreate, session: AsyncSession = Depends(db_help.session_dependency)
 ):
     return await user_service.create_user(session=session, user_in=user_in)
 
 
-@user_router.get('/{user_id}', response_model = UserRead)
-async def get_user_by_id(user : UserRead = Depends(user_by_id)):
+@user_router.get("/{user_id}", response_model=UserRead)
+async def get_user_by_id(user: UserRead = Depends(user_by_id)):
     return user

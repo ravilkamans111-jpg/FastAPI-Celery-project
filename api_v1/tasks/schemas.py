@@ -3,7 +3,8 @@ from core.models.task import StatusEnum
 from pydantic import BaseModel, ConfigDict, Field
 
 
-''' Pydantic - схемы для задач'''
+""" Pydantic - схемы для задач"""
+
 
 class TasksBase(BaseModel):
     title: str = Field(min_length=1, max_length=200)
@@ -11,7 +12,7 @@ class TasksBase(BaseModel):
     status: StatusEnum
     created_at: datetime
     updated_at: datetime
-    user_id : int
+    user_id: int
 
 
 class Task(TasksBase):

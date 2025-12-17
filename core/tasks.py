@@ -2,11 +2,12 @@ from time import sleep
 from core.celery_app import celery_app
 from core.models.task import StatusEnum
 
-''' Таска для Celery'''
+""" Таска для Celery"""
 
-@celery_app.task(name='tasks.process_task')
+
+@celery_app.task(name="tasks.process_task")
 def process_task(task_id: int):
-    print('Мы в celery')
+    print("Мы в celery")
     sleep(5)
     from core.celery_session import SessionLocal
     from core.models import Tasks

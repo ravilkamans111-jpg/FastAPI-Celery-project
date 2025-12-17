@@ -7,50 +7,51 @@ from .depends import task_by_id
 from .schemas import TaskCreate, Task, TaskUpdate, TaskUpdatePart
 
 
-task_router = APIRouter(tags= ['Tasks'])
+task_router = APIRouter(tags=["Tasks"])
 
 
-''' Роутеры для задач'''
+""" Роутеры для задач"""
+
 
 @task_router.get(
-    '/',
-    response_model = list[Task],
+    "/",
+    response_model=list[Task],
 )
 async def get_tasks(
-        session: AsyncSession = Depends(db_help.session_dependency),
+    session: AsyncSession = Depends(db_help.session_dependency),
 ):
     return await task_service.get_tasks(session=session)
 
 
 @task_router.post(
-    '/',
-    response_model = Task,
+    "/",
+    response_model=Task,
 )
 async def create_task(
-        task_in:TaskCreate,
-        session: AsyncSession = Depends(db_help.session_dependency),
+    task_in: TaskCreate,
+    session: AsyncSession = Depends(db_help.session_dependency),
 ):
     return await task_service.create_task(session=session, task_in=task_in)
 
 
 @task_router.get(
-    '/{task_id}/',
-    response_model = Task,
+    "/{task_id}/",
+    response_model=Task,
 )
 async def get_task(
-        task : Task = Depends(task_by_id),
+    task: Task = Depends(task_by_id),
 ):
     return task
 
 
 @task_router.put(
-    '/{task_id}/',
+    "/{task_id}/",
 )
 async def update_task(
-        task_update : TaskUpdate,
-        task : Task = Depends(task_by_id),
-        session: AsyncSession = Depends(db_help.session_dependency)
- ):
+    task_update: TaskUpdate,
+    task: Task = Depends(task_by_id),
+    session: AsyncSession = Depends(db_help.session_dependency),
+):
     return await task_service.update_task(
         session=session,
         task=task,
@@ -59,19 +60,16 @@ async def update_task(
 
 
 @task_router.patch(
-    '/tasks/{task_id}/status/',
+    "/tasks/{task_id}/status/",
     response_model=Task,
 )
 async def update_task_part(
-        task_update : TaskUpdatePart,
-        task : Task = Depends(task_by_id),
-        session: AsyncSession = Depends(db_help.session_dependency)
- ):
+    task_update: TaskUpdatePart,
+    task: Task = Depends(task_by_id),
+    session: AsyncSession = Depends(db_help.session_dependency),
+):
     return await task_service.update_task_part(
-        session=session,
-        task=task,
-        task_update_part=task_update,
-        partial = True
+        session=session, task=task, task_update_part=task_update, partial=True
     )
 
 

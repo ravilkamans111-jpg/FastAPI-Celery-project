@@ -4,8 +4,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.models.task import Tasks
 
 
+"""Работа с базой данных в crud"""
 
-'''Работа с базой данных в crud'''
+
 class RepoTask:
     async def get_all_tasks(self, session: AsyncSession) -> list[Tasks]:
         stmt = select(Tasks).order_by(Tasks.id)
@@ -13,10 +14,7 @@ class RepoTask:
         tasks = result.scalars().all()
         return list(tasks)
 
-
-    async def get_tasks_by_users_if(self,
-            session: AsyncSession,
-            user_id: int):
+    async def get_tasks_by_users_if(self, session: AsyncSession, user_id: int):
         stmt = select(Tasks).where(Tasks.user_id == user_id).order_by(Tasks.id)
         result = await session.execute(stmt)
         return list(result.scalars().all())
