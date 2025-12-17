@@ -14,15 +14,13 @@ from users.shemas import UserCreate
 
 class UserService:
     async def create_user(self, session: AsyncSession, user_in: UserCreate):
-        new_user = await self.get_user_by_email(session, user_in.email)
-
-        if new_user:
-            raise HTTPException(400, "User in DB")
+        existing_user = await self.get_user_by_email(session, user_in.email)
+        if existing_user:
+            raise HTTPException(400, "User already exists")
 
         user = User(**user_in.model_dump())
         session.add(user)
-        await session.commit()
-        await session.refresh(user)
+        # commit/refresh не пишем — сессия сделает это автоматически
         return user
 
     async def get_all_users(self, session: AsyncSession):

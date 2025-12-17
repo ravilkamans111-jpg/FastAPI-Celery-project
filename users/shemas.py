@@ -6,7 +6,7 @@ from pydantic import BaseModel, EmailStr
 
 class UserSchema(BaseModel):
     id: int
-    email: str
+    email: EmailStr
     created_at: datetime
 
     model_config = {"from_attributes": True}
@@ -16,5 +16,5 @@ class UserRead(UserSchema):
     pass
 
 
-class UserCreate(BaseModel):
-    email: EmailStr
+class UserCreate(UserSchema):
+    email : EmailStr
