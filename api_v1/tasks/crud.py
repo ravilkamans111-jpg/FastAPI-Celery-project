@@ -17,8 +17,7 @@ class TaskService:
     async def create_task(self, session: AsyncSession, task_in: TaskCreate):
         task = Tasks(**task_in.model_dump())
         session.add(task)
-        await session.commit()
-        await session.refresh(task)
+        await session.flush()
         process_task.delay(task.id)
 
         return task
@@ -32,7 +31,7 @@ class TaskService:
     ):
         for key, value in task_update_part.model_dump(exclude_unset=partial).items():
             setattr(task, key, value)
-        await session.commit()
+
         return task
 
     async def update_task_part(
@@ -44,12 +43,12 @@ class TaskService:
     ):
         for key, value in task_update_part.model_dump(exclude_unset=partial).items():
             setattr(task, key, value)
-        await session.commit()
+
         return task
 
     async def delete_task(self, session: AsyncSession, task: Tasks):
         await session.delete(task)
-        await session.commit()
+        # commit/rollback произойдет автоматически через session_dependency
 
     async def get_tasks_by_user_id(self, session: AsyncSession, user_id: int):
         return await repo_task.get_tasks_by_users_if(session, user_id)

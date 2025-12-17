@@ -1,13 +1,9 @@
 from fastapi import APIRouter
-from fastapi.params import Depends
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models import Tasks
-from core.models.db_helper import db_help
 from .crud import task_service
-from .depends import task_by_id
+from .depends import SessionDep
 from .schemas import TaskCreate, TaskSchema, TaskUpdate, TaskUpdatePart
-
+from .update_dep import TaskDep
 
 task_router = APIRouter(tags=["Tasks"])
 
@@ -20,7 +16,7 @@ task_router = APIRouter(tags=["Tasks"])
     response_model=list[TaskSchema],
 )
 async def get_tasks(
-    session: AsyncSession = Depends(db_help.session_dependency),
+    session: SessionDep,
 ):
     return await task_service.get_tasks(session=session)
 
@@ -31,7 +27,7 @@ async def get_tasks(
 )
 async def create_task(
     task_in: TaskCreate,
-    session: AsyncSession = Depends(db_help.session_dependency),
+    session: SessionDep,
 ):
     return await task_service.create_task(session=session, task_in=task_in)
 
@@ -41,7 +37,7 @@ async def create_task(
     response_model=TaskSchema,
 )
 async def get_task(
-    task: TaskSchema = Depends(task_by_id),
+    task: TaskDep,
 ):
     return task
 
@@ -51,8 +47,8 @@ async def get_task(
 )
 async def update_task(
     task_update: TaskUpdate,
-    task: Tasks = Depends(task_by_id),
-    session: AsyncSession = Depends(db_help.session_dependency),
+    task: TaskDep,
+    session: SessionDep,
 ):
     return await task_service.update_task(
         session=session,
@@ -67,8 +63,8 @@ async def update_task(
 )
 async def update_task_part(
     task_update: TaskUpdatePart,
-    task: Tasks = Depends(task_by_id),
-    session: AsyncSession = Depends(db_help.session_dependency),
+    task: TaskDep,
+    session: SessionDep,
 ):
     return await task_service.update_task_part(
         session=session, task=task, task_update_part=task_update, partial=True
@@ -81,6 +77,6 @@ async def update_task_part(
 )
 async def get_tasks_by_user(
     user_id: int,
-    session: AsyncSession = Depends(db_help.session_dependency),
+    session: SessionDep,
 ):
     return await task_service.get_tasks_by_user_id(session=session, user_id=user_id)
