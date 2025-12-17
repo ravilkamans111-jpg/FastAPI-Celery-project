@@ -15,7 +15,7 @@ class TasksBase(BaseModel):
     user_id: int
 
 
-class Task(TasksBase):
+class TaskSchema(TasksBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
 

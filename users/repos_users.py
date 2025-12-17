@@ -6,7 +6,7 @@ from core.models import User
 
 
 class RepoUser:
-    async def get_all_users(session: AsyncSession):
+    async def get_all_users(self, session: AsyncSession):
         stmt = select(User).order_by(User.id)
         result: Result = await session.execute(stmt)
         users = result.scalars().all()

@@ -8,9 +8,11 @@ from users.crud import user_service
 """ Зависимости """
 
 
+SessionDep = Annotated[AsyncSession, Depends(db_help.session_dependency)]
+
 async def user_by_id(
     user_id: Annotated[int, Path],
-    session: AsyncSession = Depends(db_help.session_dependency),
+    session: SessionDep,  # <- используем Annotated вместо обычного Depends
 ):
     user = await user_service.get_user_by_id(session=session, user_id=user_id)
     if user is not None:

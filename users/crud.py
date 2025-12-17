@@ -2,7 +2,7 @@ from http.client import HTTPException
 
 from pydantic import EmailStr
 
-from repos_users import user_repos
+from users.repos_users import user_repos
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql.expression import select
 
