@@ -2,6 +2,9 @@ import asyncio
 from http.client import HTTPException
 
 from pydantic import EmailStr
+
+from api_v1.tasks.reposetory import repo_task
+from repos_users import user_repos
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql.expression import select
 
@@ -24,6 +27,10 @@ class UserService:
         await session.commit()
         await session.refresh(user)
         return user
+
+
+    async def get_all_users(self, session: AsyncSession):
+        return await user_repos.get_all_users(session)
 
 
     async def get_user_by_id(self, session: AsyncSession, user_id: int) -> User | None:
