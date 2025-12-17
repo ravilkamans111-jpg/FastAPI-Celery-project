@@ -1,5 +1,4 @@
 from core.tasks import process_task
-from sqlalchemy import select
 from .reposetory import repo_task
 from sqlalchemy.ext.asyncio import AsyncSession
 from core.models.task import Tasks

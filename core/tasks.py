@@ -1,7 +1,6 @@
 from time import sleep
 from core.celery_app import celery_app
-from core.models.task import StatusEnum, Tasks
-from .models import db_help
+from core.models.task import StatusEnum
 
 ''' Таска для Celery'''
 

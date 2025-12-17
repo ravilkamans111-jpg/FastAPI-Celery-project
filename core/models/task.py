@@ -1,6 +1,6 @@
 from core.mixin import UpdatedAtMixin, CreatedAtMixin
 import enum
-from sqlalchemy import DateTime, String, ForeignKey
+from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from core.models.base import Base
 from typing import TYPE_CHECKING

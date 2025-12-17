@@ -1,14 +1,12 @@
-import asyncio
 from http.client import HTTPException
 
 from pydantic import EmailStr
 
-from api_v1.tasks.reposetory import repo_task
 from repos_users import user_repos
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql.expression import select
 
-from core.models import db_help, User
+from core.models import User
 from users.shemas import UserCreate
 
 ''' Сервисы для пользователей '''

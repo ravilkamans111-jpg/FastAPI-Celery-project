@@ -2,9 +2,7 @@ from contextlib import asynccontextmanager
 from core.config import settings
 import uvicorn
 from api_v1 import router as router_v1
-from core.models.base import Base
 from fastapi import FastAPI
-from core.models.db_helper import db_help
 from users import router_v2
 
 
