@@ -7,7 +7,6 @@ from core.models.task import StatusEnum
 
 @celery_app.task(name="tasks.process_task")
 def process_task(task_id: int):
-    print("Мы в celery")
     sleep(5)
     from core.celery_session import SessionLocal
     from core.models import Tasks

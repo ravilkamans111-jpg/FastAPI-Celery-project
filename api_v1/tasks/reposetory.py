@@ -11,8 +11,7 @@ class RepoTask:
     async def get_all_tasks(self, session: AsyncSession) -> list[Tasks]:
         stmt = select(Tasks).order_by(Tasks.id)
         result: Result = await session.execute(stmt)
-        tasks = result.scalars().all()
-        return list(tasks)
+        return list(result.scalars().all())
 
     async def get_tasks_by_users_if(self, session: AsyncSession, user_id: int):
         stmt = select(Tasks).where(Tasks.user_id == user_id).order_by(Tasks.id)

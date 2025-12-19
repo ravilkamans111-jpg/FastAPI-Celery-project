@@ -12,6 +12,12 @@ user_router = APIRouter(prefix="/users", tags=["Users"])
 """ Роуты для пользователей """
 
 
+@user_router.get('/', response_model=list[UserRead])
+async def get_all_users(
+        session: SessionDep,
+):
+    return await user_service.get_all_users(session)
+
 @user_router.post("/", response_model=UserRead)
 async def create_user(
     user_in: UserCreate, session: SessionDep,
