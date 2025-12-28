@@ -1,4 +1,9 @@
 from contextlib import asynccontextmanager
+from datetime import datetime
+
+from starlette.requests import Request
+from starlette.responses import Response
+
 from core.config import settings
 import uvicorn
 from api_v1 import router as router_v1
@@ -18,6 +23,13 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(router=router_v1, prefix=settings.api_v1_prefix)
 app.include_router(router=router_v2)
 
+
+@app.middleware('http')
+async def add_process_time(request: Request, call_next):
+    now = datetime.now()
+    response = await call_next(request)
+    response.headers['X-Process-Time'] = str(datetime.now() - now)
+    return response
 
 if __name__ == "__main__":
     uvicorn.run("main:app", reload=True)
