@@ -1,0 +1,17 @@
+from fastapi import Depends, HTTPException, Path
+from sqlalchemy.ext.asyncio import AsyncSession
+from typing import Annotated
+from src.database.db_helper import db_help
+from src.crud.users import user_service
+
+# Централизованная зависимость для сессии
+SessionDep = Annotated[AsyncSession, Depends(db_help.session_dependency)]
+
+async def user_by_id(
+    user_id: Annotated[int, Path],
+    session: SessionDep,  # Annotated dependency для mypy
+):
+    user = await user_service.get_user_by_id(session=session, user_id=user_id)
+    if user is not None:
+        return user
+    raise HTTPException(status_code=404, detail="Not found")

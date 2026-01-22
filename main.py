@@ -2,13 +2,12 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 
 from starlette.requests import Request
-from starlette.responses import Response
 
-from core.config import settings
+from src.core.config import settings
 import uvicorn
-from api_v1 import router as router_v1
+from src.api_v1 import router as router_v1
 from fastapi import FastAPI
-from users import router_v2
+from src.api_v1.users import user_router as router_v2
 
 
 @asynccontextmanager
